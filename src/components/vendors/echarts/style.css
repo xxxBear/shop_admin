@@ -1,0 +1,8 @@
+.echarts-wrapper {
+}
+
+#chart, #radar_chart {
+  float: left;
+  width: 800px;
+  height: 600px;
+}

@@ -1,0 +1,79 @@
+<div class="categories-wrapper">
+  <el-row>
+    <el-col :span="4">
+      <el-button type="success" plain @click="showAddCateDialog">添加分类</el-button>
+    </el-col>
+  </el-row>
+
+  <!-- 分类表格 -->
+  <el-table
+    v-loading="loading"
+    :data="cateList"
+    style="width: 100%">
+    <el-table-tree-column
+        fixed
+        prop="cat_name"
+        label="分类名称"
+        parent-key="cat_pid"
+        child-key="children"
+        tree-key="cat_id"
+        level-key="cat_level"
+        width="320"
+        :indent-size="20">
+        <template slot-scope="scope">
+          <span>{{ scope.row.cat_name }}</span>
+        </template>
+    </el-table-tree-column>
+    <el-table-column
+      prop="cat_deleted"
+      label="是否有效"
+      width="180">
+      <template slot-scope="scope">
+        {{ scope.row.cat_deleted }}
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="cat_level"
+      label="排序">
+    </el-table-column>
+    <!-- 自定义列 -->
+    <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button type="primary" icon="el-icon-edit" plain size="mini"></el-button>
+        <el-button type="danger" icon="el-icon-delete" plain size="mini"></el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+
+  <!-- 分页 -->
+  <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="total"
+    @current-change="fetchCategoryList">
+  </el-pagination>
+
+  <!-- 添加分类对话框 -->
+  <el-dialog title="添加分类" :visible.sync="showCateDialog_add">
+    <el-form :model="cateForm_add">
+      <el-form-item label="分类名称" label-width="120px">
+        <el-input v-model="cateForm_add.cat_name" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="父级名称" label-width="120px">
+        <el-cascader
+          :options="categories"
+          :props="{
+            label: 'cat_name',
+            value: 'cat_id'
+          }"
+          v-model="cateForm_add.cat_pid"
+          :change-on-select="true">
+        </el-cascader>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="showCateDialog_add = false">取 消</el-button>
+      <el-button type="primary" @click="addCateForm">确 定</el-button>
+    </div>
+  </el-dialog>
+</div>

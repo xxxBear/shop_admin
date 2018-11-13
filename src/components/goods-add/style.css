@@ -1,0 +1,16 @@
+.test-wrapper {
+
+}
+
+.goods-editor {
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.goods-editor .ql-container {
+  height: 200px;
+}
+
+.goods-upload {
+  height: 200px;
+}
